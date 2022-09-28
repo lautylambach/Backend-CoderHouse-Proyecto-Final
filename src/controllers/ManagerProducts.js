@@ -25,34 +25,34 @@ class ManagerProducts {
         return [...products] || {error: 'productos no encontrados'}
     }
 
-    guardar(prod) {
-        const newProd = { ...prod, id: ++this.id }
+    guardar(prod, products) {
+        
+        let newId = products.length;
+        const newProd = { ...prod, id: newId }
         this.validationProduct(newProd)
-        this.productos.push(newProd)
-        return newProd
+        products= Array.from(products)
+        products.push(newProd)
+        console.log(products)
+        return products
     }
 
-    actualizar(prod, id) {
-        validationId(id, this.products)
+    actualizar(prod, id, products) {
+        this.validationId(id, products)
         const newProd = { id: Number(id), ...prod }
         this.validationProduct(newProd)
-        const index = this.productos.findIndex(p => p.id == id)
+        const index = products.findIndex(p => p.id == id)
         if (index !== -1) {
-            this.productos[index] = newProd
-            return newProd
+            products[index] = newProd
+            return products
         } else {
             return { error: 'producto no encontrado' }
         }
     }
 
-    borrar(id) {
-        validationId(id, this.products)
-        const index = this.productos.findIndex(prod => prod.id == id)
-        if (index !== -1) {
-            return this.productos.splice(index, 1)
-        } else {
-            return { error: 'producto no encontrado' }
-        }
+    borrar(id, products) {
+        this.validationId(id, products)
+        let newProducts = products.filter((prod) => prod.id !== id)
+        return newProducts
     }
 }
 

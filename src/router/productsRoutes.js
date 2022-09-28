@@ -5,23 +5,24 @@ const router = express.Router()
 const Manager = require('../controllers/ManagerProducts')
 const manager =new Manager()
 
-let products = fs.readFile(pathToFile,'utf-8', function (err, data){
-    products= JSON.parse(data)
-})
-function fsData(){
+// let products = fs.readFile(pathToFile,'utf-8', function (err, data){
+//     products= JSON.parse(data)
+    let products=[]
+    products = fsData()
+  function fsData(){
     if(fs.existsSync(pathToFile)){
-        let data=  fs.readFile(pathToFile,'utf-8', function (err, data){
+        fs.readFile(pathToFile,'utf-8', function (err, data){
             products= JSON.parse(data)
         })
         
-        return{status:"succes", products}
+        return products
                                      
     }else{
         fs.writeFileSync(pathToFile,JSON.stringify([],null,2))
-        let data=  fs.readFile(pathToFile,'utf-8', function (err, data){
+        fs.readFile(pathToFile,'utf-8', function (err, data){
             products= JSON.parse(data)
         })
-        return{status:"succes",message:'file created', products}
+        return products
     }
 }
 
@@ -30,29 +31,44 @@ function fsData(){
 
 
 router.get('/', (req, res) => {
-    fsData()
+    products = fsData()
     manager.listarAll(products)
     res.send({status: 200, message: 'Hello GET All', products})
 })
  
 router.get('/:id', (req, res) => {
-    fsData()
+    products = fsData()
     let id =parseInt(req.params.id)
-    const result = manager.listar(id,products)
+    const result = manager.listar(id, products)
     if(!result) return res.status(400).send({err:'producto no encontrado'})
     res.send({status: 200, message: 'Hello GET By Id', result})
 })
  
-// router.post('/', (req, res) => {
-//     res.send({status: 200, message: 'Hello POST'})
-// })
+router.post('/', (req, res) => {
+    let timestamp= Date.now()
+    let products = fsData()
+    let prod = {...req.body , timestamp: timestamp}
+    let result = manager.guardar(prod, products)
+    fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
+    res.send({status: 200, message: 'Hello POST', result})
+})
  
-// router.put('/:id', (req, res) => {
-//     res.send({status: 200, message: 'Hello PUT'})
-// })
+router.put('/:id', (req, res) => {
+    products = fsData()
+    let timestamp= Date.now()
+    let id = parseInt(req.params.id)
+    let prod = {...req.body , timestamp: timestamp}
+    let result = manager.actualizar(prod, id, products)
+    fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
+    res.send({status: 200, message: 'Hello PUT', result})
+})
  
-// router.delete('/:id', (req, res) => {
-//     res.send({status: 200, message: 'Hello DELETE'})
-// })
+router.delete('/:id', (req, res) => {
+    let id = parseInt(req.params.id)
+    products = fsData()
+    let result = manager.borrar(id, products)
+    fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
+    res.send({status: 200, message: 'Hello DELETE', result})
+})
 
 module.exports = router
