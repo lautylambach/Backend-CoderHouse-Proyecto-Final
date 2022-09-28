@@ -5,11 +5,11 @@ const router = express.Router()
 const Manager = require('../controllers/ManagerProducts')
 const manager =new Manager()
 
-// let products = fs.readFile(pathToFile,'utf-8', function (err, data){
-//     products= JSON.parse(data)
-    let products=[]
-    products = fsData()
-  function fsData(){
+
+let products=[]
+
+
+function fsData(){
     if(fs.existsSync(pathToFile)){
         fs.readFile(pathToFile,'utf-8', function (err, data){
             products= JSON.parse(data)
@@ -25,9 +25,7 @@ const manager =new Manager()
         return products
     }
 }
-
-
-
+products = fsData()
 
 
 router.get('/', (req, res) => {

@@ -1,26 +1,29 @@
+const fs= require('fs')
+const pathToProducts = './src/data/products.json'
+const pathToCarts = './src/data/carts.json'
 const express = require('express')
 const router = express.Router()
-const Manager = require('../controllers/ManagerProducts')
-const manager =new Manager()
+const ManagerProducts = require('../controllers/ManagerProducts')
+const managerProducts =new ManagerProducts()
+const ManagerCarts = require('../controllers/ManagerCarts')
+const managerCarts =new ManagerCarts()
 
-// router.get('/', (req, res) => {
-//     res.send({status: 200, message: 'Hello GET All'})
-// })
- 
-// router.get('/:id', (req, res) => {
-//     res.send({status: 200, message: 'Hello GET By Id'})
-// })
- 
-// router.post('/', (req, res) => {
-//     res.send({status: 200, message: 'Hello POST'})
-// })
- 
-// router.put('/:id', (req, res) => {
-//     res.send({status: 200, message: 'Hello PUT'})
-// })
- 
-// router.delete('/:id', (req, res) => {
-//     res.send({status: 200, message: 'Hello DELETE'})
-// })
+let carts = [] 
+function fsCarts(){
+    if (fs.existsSync(pathToCarts)){
+        fs.readFile(pathToCarts,'utf-8', function (err, data){
+            carts= JSON.parse(data)
+        })
+        
+        return carts
+    }
+}
+carts = fsCarts();
+
+router.post('/', (req,res) =>{
+    let result =managerCarts.crearCarrito(carts)
+    
+    res.send({status: 200, message:`icarrito creado con exito, id: ${result}`})
+})
 
 module.exports = router
