@@ -1,5 +1,6 @@
+const express = require('express')
 const router = express.Router()
-const Manager = require('./controllers/ManagerProductos.js')
+const Manager = require('../controllers/ManagerProducts')
 const manager =new Manager()
 
 router.get('/', (req, res) => {
