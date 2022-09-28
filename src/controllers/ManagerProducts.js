@@ -16,7 +16,6 @@ class ManagerProducts {
      
     listar(id,products) {
         this.validationId(id,products)
-        console.log('productos en destino',products)
         const prod = products.find(prod => prod.id == id)
         if(!prod) return { error: 'producto no encontr1ado' } 
         return prod 
