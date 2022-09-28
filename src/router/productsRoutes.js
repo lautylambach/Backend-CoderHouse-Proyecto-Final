@@ -41,16 +41,16 @@ router.get('/:id', (req, res) => {
     res.send({status: 200, message: 'Hello GET By Id', result})
 })
  
-router.post('/', (req, res) => {
-    res.send({status: 200, message: 'Hello POST'})
-})
+// router.post('/', (req, res) => {
+//     res.send({status: 200, message: 'Hello POST'})
+// })
  
-router.put('/:id', (req, res) => {
-    res.send({status: 200, message: 'Hello PUT'})
-})
+// router.put('/:id', (req, res) => {
+//     res.send({status: 200, message: 'Hello PUT'})
+// })
  
-router.delete('/:id', (req, res) => {
-    res.send({status: 200, message: 'Hello DELETE'})
-})
+// router.delete('/:id', (req, res) => {
+//     res.send({status: 200, message: 'Hello DELETE'})
+// })
 
 module.exports = router
