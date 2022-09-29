@@ -4,27 +4,49 @@
     "price": "2500",
     "timestamp": 1664397851212,
     "thumbnail": "https://es.wikipedia.org/wiki/Teclado_%28inform%C3%A1tica%29#/media/Archivo:Computer_keyboard_ES_layout.svg",
-    "id": 1
+    "id": 1,
+    "description": "lorem Ipsum",
+    "code": "15875",
+    "stock": 5
   },
   {
     "title": "auriculares",
     "price": "1850",
     "timestamp": 1664397871212,
     "thumbnail": "https://es.wikipedia.org/wiki/Auricular#/media/Archivo:S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg",
-    "id": 2
+    "id": 2,
+    "description": "lorem Ipsum",
+    "code": "15876",
+    "stock": 5
   },
   {
     "title": "microfono",
     "price": "2500",
     "timestamp": 1664397581212,
     "thumbnail": "https://es.wikipedia.org/wiki/Micr%C3%B3fono#/media/Archivo:AKG_C451B.jpg",
-    "id": 3
+    "id": 3,
+    "description": "lorem Ipsum",
+    "code": "15877",
+    "stock": 5
   },
   {
     "title": "monitor",
     "price": "18000",
     "timestamp": 1664378851212,
     "thumbnail": "https://es.wikipedia.org/wiki/Monitor_de_computadora#/media/Archivo:LG_L194WT-SF_LCD_monitor.jpg",
-    "id": 4
+    "id": 4,
+    "description": "lorem Ipsum",
+    "code": "15878",
+    "stock": 5
+  },
+  {
+    "id": 5,
+    "title": "motherboard gamer",
+    "price": "15500",
+    "timestamp": 1664419225154,
+    "thumbnail": "https://es.wikipedia.org/wiki/Teclado_%28inform%C3%A1tica%29#/media/Archivo:Computer_keyboard_ES_layout.svg",
+    "description": "lorem Ipsum",
+    "code": "15879",
+    "stock": 5
   }
 ]

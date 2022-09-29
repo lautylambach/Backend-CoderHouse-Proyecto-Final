@@ -5,7 +5,7 @@ const router = express.Router()
 const Manager = require('../controllers/ManagerProducts')
 const manager =new Manager()
 
-
+let admin = true
 let products=[]
 
 
@@ -43,30 +43,45 @@ router.get('/:id', (req, res) => {
 })
  
 router.post('/', (req, res) => {
-    let timestamp= Date.now()
-    let products = fsData()
-    let prod = {...req.body , timestamp: timestamp}
-    let result = manager.guardar(prod, products)
-    fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
-    res.send({status: 200, message: 'Hello POST', result})
+    if(admin){
+        let timestamp= Date.now()
+        let products = fsData()
+        let prod = {...req.body , timestamp: timestamp}
+        let result = manager.guardar(prod, products)
+        fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
+        res.send({status: 200, message: 'Hello POST', result})
+    }else{
+        res.send({ error : -1, descripcion: 'solicitud no autorizada' })
+    }
+    
 })
  
 router.put('/:id', (req, res) => {
-    products = fsData()
-    let timestamp= Date.now()
-    let id = parseInt(req.params.id)
-    let prod = {...req.body , timestamp: timestamp}
-    let result = manager.actualizar(prod, id, products)
-    fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
-    res.send({status: 200, message: 'Hello PUT', result})
+    if(admin){
+        products = fsData()
+        let timestamp= Date.now()
+        let id = parseInt(req.params.id)
+        let prod = {...req.body , timestamp: timestamp}
+        let result = manager.actualizar(prod, id, products)
+        fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
+        res.send({status: 200, message: 'Hello PUT', result})
+    }else{
+        res.send({ error : -1, descripcion: 'solicitud no autorizada' })
+    }
+    
 })
  
 router.delete('/:id', (req, res) => {
-    let id = parseInt(req.params.id)
-    products = fsData()
-    let result = manager.borrar(id, products)
-    fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
-    res.send({status: 200, message: 'Hello DELETE', result})
+    if(admin){
+        let id = parseInt(req.params.id)
+        products = fsData()
+        let result = manager.borrar(id, products)
+        fs.writeFileSync(pathToFile,JSON.stringify(result,null,2))
+        res.send({status: 200, message: 'Hello DELETE', result})
+    }else{
+        res.send({ error : -1, descripcion: 'solicitud no autorizada' })
+    }
+    
 })
 
 module.exports = router

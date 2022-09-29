@@ -54,16 +54,24 @@ class ManagerCarts {
     //     return newProducts
     // }
     accederACarts(){
-        if (fs.existsSync(pathToCarts)){
-            fs.readFile(pathToCarts,'utf-8', function (err, data){
-                carts= JSON.parse(data)
-            })
+        // if (fs.existsSync(pathToCarts)){
+        //     let data= fs.readFileSync(pathToCarts,'utf-8', function (err, data){
+        //         carts= JSON.parse(data)
+        //         console.log('pase x aqui')
+        //         console.log(carts)
+        //     })
             
+        //     return carts
+        // }
+        if (fs.existsSync(pathToCarts)){
+            let data= fs.readFileSync(pathToCarts,'utf-8')
+            carts= JSON.parse(data)
             return carts
         }
     }
     crearCarrito(){
         let array = this.accederACarts()
+        console.log(array)
         let newId = array.length+1
         let timeStamp = Date.now()
         let cart =  {id: newId,
@@ -71,9 +79,44 @@ class ManagerCarts {
              products: []
             }
         array.push(cart)
+        console.log('aqui abajo')
+        console.log(array)
+        carts = array
         fs.writeFileSync(pathToCarts,JSON.stringify(array,null,2))
 
         return newId
+    }
+    borrarCarrito(id){
+        let array = this.accederACarts()
+        let newArray = array.filter((cart) => cart.id !== id)
+        fs.writeFileSync(pathToCarts,JSON.stringify(newArray,null,2))
+        return newArray
+    }
+    listarProductsInCart(id){
+        let array = this.accederACarts()
+        let index= array.findIndex((cart)=> cart.id == id)
+        let listProducts = array[index].products
+        return listProducts
+    }
+    agregarProductsToCart(id, prod){
+        let prodArray=this.listarProductsInCart(id)
+        prodArray.push(prod)
+        let array = this.accederACarts()
+        let index= array.findIndex((cart)=> cart.id == id)
+        array[index].products = prodArray
+        fs.writeFileSync(pathToCarts,JSON.stringify(array,null,2))
+        let result = this.listarProductsInCart(id)
+        return result
+    }
+    deleteProductsInCart(id, idProd){
+        let prodArray=this.listarProductsInCart(id)
+        let newProdArray = prodArray.filter((prod)=>prod.id != idProd)
+        let array = this.accederACarts()
+        let index= array.findIndex((cart)=> cart.id == id)
+        array[index].products = newProdArray
+        fs.writeFileSync(pathToCarts,JSON.stringify(array,null,2))
+        let result = this.listarProductsInCart(id)
+        return result
     }
 }
 
