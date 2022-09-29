@@ -45,3 +45,7 @@ id, timestamp(carrito), producto: { id, timestamp(producto), nombre, descripcion
 4) La estructura de programación será ECMAScript, separada tres en módulos básicos (router, lógica de negocio/api y persistencia ). Más adelante implementaremos el desarrollo en capas. Utilizar preferentemente clases, constructores de variables let y const y arrow function.
 
 5) Realizar la prueba de funcionalidad completa en el ámbito local (puerto 8080) y en glitch.com
+
+**Observaciones**
+1) en directorio principal hay dos archivos .json para hacer pruebas de funcionameinto en thunderclient y postman
+2) el proyecto se levanta desde consola con la linea de comando npm start
